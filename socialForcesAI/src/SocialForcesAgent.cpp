@@ -9,6 +9,7 @@
 #include "SocialForcesAgent.h"
 #include "SocialForcesAIModule.h"
 #include "SocialForces_Parameters.h"
+#include "planning/AStarPlanner.h"
 // #include <math.h>
 
 
@@ -282,7 +283,7 @@ Vector SocialForcesAgent::calcGoalForce(Vector _goalDirection, float _dt)
 {
     //std::cerr<<"<<<calcGoalForce>>> Please Implement my body\n";
 	Util::Vector goal_force = Util::Vector(0, 0, 0);
-	goal_force = ((((_goalDirection * PREFERED_SPEED) - velocity()) / _dt) * AGENT_MASS);
+	goal_force = (((_goalDirection * PREFERED_SPEED) - velocity())  * AGENT_MASS);
 	return goal_force;
 }
 
@@ -744,11 +745,12 @@ bool SocialForcesAgent::runLongTermPlanning()
 	std::vector<Util::Point> agentPath;
 	Util::Point pos =  position();
 
-	if ( !gSpatialDatabase->findPath(pos, _goalQueue.front().targetLocation,
-			agentPath, (unsigned int) 50000))
-	{
-		return false;
-	}
+
+	//if ( !gSpatialDatabase->findPath(pos, _goalQueue.front().targetLocation,
+	//		agentPath, (unsigned int) 50000))
+	//{
+	//	return false;
+	//}
 
 	for  (int i=1; i <  agentPath.size(); i++)
 	{
@@ -761,6 +763,27 @@ bool SocialForcesAgent::runLongTermPlanning()
 	return true;
 }
 
+void SocialForcesAgent::computePlan()
+{
+	std::cout << "\nComputing agent plan ";
+	Util::Point global_goal = _goalQueue.front().targetLocation;
+	if (astar.computePath(__path, _position, _goalQueue.front().targetLocation, gSpatialDatabase))
+	{
+
+		while (!_goalQueue.empty())
+			_goalQueue.pop();
+
+		for (int i = 0; i<__path.size(); ++i)
+		{
+			SteerLib::AgentGoalInfo goal_path_pt;
+			goal_path_pt.targetLocation = __path[i];
+			_goalQueue.push(goal_path_pt);
+		}
+		SteerLib::AgentGoalInfo goal_path_pt;
+		goal_path_pt.targetLocation = global_goal;
+		_goalQueue.push(goal_path_pt);
+	}
+}
 
 bool SocialForcesAgent::runLongTermPlanning2()
 {
@@ -935,5 +958,6 @@ void SocialForcesAgent::draw()
 #endif
 
 #endif
+	//std::cout << " draw completed" << std::endl;
 }
 

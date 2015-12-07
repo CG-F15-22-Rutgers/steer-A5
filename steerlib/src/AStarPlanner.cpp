@@ -397,8 +397,8 @@ namespace SteerLib
 		}
 
 		std::cout << "num of steps is   " << agent_path.size() - 1 << std::endl;
-		std::cout << "total path length is   " << gridcell[x_g][z_g].g << std::endl;
-		std::cout << "num of expanded nodes is  " << closed.size() << std::endl;
+		//std::cout << "total path length is   " << gridcell[x_g][z_g].g << std::endl;
+		//std::cout << "num of expanded nodes is  " << closed.size() << std::endl;
 
 		//std::cout<<"\nIn A*";
 		return true;

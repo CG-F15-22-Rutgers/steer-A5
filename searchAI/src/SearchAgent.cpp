@@ -141,13 +141,15 @@ void SearchAgent::draw()
 {
 #ifdef ENABLE_GUI
 	// if the agent is selected, do some annotations just for demonstration
-	if (gEngine->isAgentSelected(this)) {
+	if (gEngine->isAgentSelected(this)) 
+	{
 		Util::Ray ray;
 		ray.initWithUnitInterval(__position, _forward);
 		float t = 0.0f;
 		SteerLib::SpatialDatabaseItem * objectFound;
 		Util::DrawLib::drawLine(ray.pos, ray.eval(1.0f));
-		if (gSpatialDatabase->trace(ray, t, objectFound, this, false)) {
+		if (gSpatialDatabase->trace(ray, t, objectFound, this, false)) 
+		{
 			Util::DrawLib::drawAgentDisc(__position, _forward, _radius, Util::gBlue);
 		}
 		else {

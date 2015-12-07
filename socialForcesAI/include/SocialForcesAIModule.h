@@ -77,6 +77,7 @@ class SocialForcesAIModule : public SteerLib::ModuleInterface
         Logger * _rvoLogger;
         std::string _data;
         std::vector<LogObject *> _logData;
+		bool planned_once = true;
 };
 
 

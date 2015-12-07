@@ -20,6 +20,7 @@
 // #include "SimpleAgent.h"
 // #include "SocialForcesAIModule.h"
 #include "SocialForces_Parameters.h"
+#include "planning/AStarPlanner.h"
 
 
 /**
@@ -67,6 +68,8 @@ class SocialForcesAgent : public SteerLib::AgentInterface
         // bool collidesAtTimeWith(const Util::Point & p1, const Util::Vector & rightSide, float otherAgentRadius, float timeStamp, float footX, float footZ);
         void insertAgentNeighbor(const SteerLib::AgentInterface * agent, float &rangeSq) {throw Util::GenericException("clearGoals() not implemented yet for SimpleAgent");}
         // bool compareDist(SteerLib::AgentInterface * a1, SteerLib::AgentInterface * a2 );
+		SteerLib::AStarPlanner astar;
+		void computePlan();
 
     protected:
         /// Updates position, velocity, and orientation of the agent, given the force and dt time step.
@@ -88,6 +91,7 @@ class SocialForcesAgent : public SteerLib::AgentInterface
         Util::Vector _newVelocity;
         Util::Color _color;
         float _radius;
+		std::vector<Util::Point> __path;
 
         std::queue<SteerLib::AgentGoalInfo> _goalQueue;
 

@@ -44,16 +44,16 @@ namespace SteerLib
 		z_range_max = MIN(z+OBSTACLE_CLEARANCE, gSpatialDatabase->getNumCellsZ());
 
 
-		for (int i = x_range_min; i<=x_range_max; i+=GRID_STEP)
-		{
-			for (int j = z_range_min; j<=z_range_max; j+=GRID_STEP)
-			{
-				int index = gSpatialDatabase->getCellIndexFromGridCoords( i, j );
-				traversal_cost += gSpatialDatabase->getTraversalCost ( index );
-				
-			}
-		}
-
+		//for (int i = x_range_min; i<=x_range_max; i+=GRID_STEP)
+		//{
+		//	for (int j = z_range_min; j<=z_range_max; j+=GRID_STEP)
+		//	{
+		//		int index = gSpatialDatabase->getCellIndexFromGridCoords( i, j );
+		//		traversal_cost += gSpatialDatabase->getTraversalCost ( index );
+		//		
+		//	}
+		//}
+		traversal_cost = gSpatialDatabase->getTraversalCost(current_id);
 		if ( traversal_cost > COLLISION_COST ) 
 			return false;
 		return true;
@@ -390,7 +390,7 @@ namespace SteerLib
 		}
 
 		//std::cout << "before agent_path is modified" << std::endl;
-		agent_path.push_back(start);
+		//agent_path.push_back(start);
 		for (auto i = temp.end() - 1; i > temp.begin() - 1; i--)
 		{
 			agent_path.push_back((*i).point);

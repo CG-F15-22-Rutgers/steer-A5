@@ -104,9 +104,9 @@ void SearchAgent::computePlan()
 			goal_path_pt.targetLocation = __path[i];
 			_goalQueue.push(goal_path_pt);
 		}
-		SteerLib::AgentGoalInfo goal_path_pt;
-		goal_path_pt.targetLocation = global_goal;
-		_goalQueue.push(goal_path_pt);
+		//SteerLib::AgentGoalInfo goal_path_pt;
+		//goal_path_pt.targetLocation = global_goal;
+		//_goalQueue.push(goal_path_pt);
 	}
 	// else
 	// {
@@ -143,6 +143,7 @@ void SearchAgent::draw()
 	// if the agent is selected, do some annotations just for demonstration
 	if (gEngine->isAgentSelected(this)) 
 	{
+		//std::cout << " is agent" << std::endl;
 		Util::Ray ray;
 		ray.initWithUnitInterval(__position, _forward);
 		float t = 0.0f;
@@ -157,6 +158,7 @@ void SearchAgent::draw()
 		}
 	}
 	else {
+		//std::cout << " not agent" << std::endl;
 		Util::DrawLib::drawAgentDisc(__position, _forward, _radius, Util::gGray40);
 	}
 	if (_goalQueue.front().goalType == SteerLib::GOAL_TYPE_SEEK_STATIC_TARGET) {

@@ -765,8 +765,8 @@ bool SocialForcesAgent::runLongTermPlanning()
 
 void SocialForcesAgent::computePlan()
 {
-	std::cout << "\nComputing agent plan ";
-	Util::Point global_goal = _goalQueue.front().targetLocation;
+	//std::cout << "\nComputing agent plan ";
+	//Util::Point global_goal = _goalQueue.front().targetLocation;
 	if (astar.computePath(__path, _position, _goalQueue.front().targetLocation, gSpatialDatabase))
 	{
 
@@ -779,9 +779,9 @@ void SocialForcesAgent::computePlan()
 			goal_path_pt.targetLocation = __path[i];
 			_goalQueue.push(goal_path_pt);
 		}
-		SteerLib::AgentGoalInfo goal_path_pt;
-		goal_path_pt.targetLocation = global_goal;
-		_goalQueue.push(goal_path_pt);
+		//SteerLib::AgentGoalInfo goal_path_pt;
+		//goal_path_pt.targetLocation = global_goal;
+		//_goalQueue.push(goal_path_pt);
 	}
 }
 
@@ -828,6 +828,7 @@ void SocialForcesAgent::draw()
 	// if the agent is selected, do some annotations just for demonstration
 	if (gEngine->isAgentSelected(this))
 	{
+		//std::cout << " is agent" << std::endl;
 		Util::Ray ray;
 		ray.initWithUnitInterval(_position, _forward);
 		float t = 0.0f;
@@ -859,6 +860,7 @@ void SocialForcesAgent::draw()
 		// DrawLib::drawStar(_waypoints.at(i), Util::Vector(1,0,0), 0.34f, gBlue);
 	}
 	else {
+		//std::cout << " not agent" << std::endl;
 		Util::DrawLib::drawAgentDisc(_position, _radius, this->_color);
 	}
 	if (_goalQueue.front().goalType == SteerLib::GOAL_TYPE_SEEK_STATIC_TARGET) {

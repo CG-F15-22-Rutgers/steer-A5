@@ -70,6 +70,7 @@ class SocialForcesAgent : public SteerLib::AgentInterface
         // bool compareDist(SteerLib::AgentInterface * a1, SteerLib::AgentInterface * a2 );
 		SteerLib::AStarPlanner astar;
 		void computePlan();
+		void computePlan2();
 
     protected:
         /// Updates position, velocity, and orientation of the agent, given the force and dt time step.
@@ -92,6 +93,7 @@ class SocialForcesAgent : public SteerLib::AgentInterface
         Util::Color _color;
         float _radius;
 		std::vector<Util::Point> __path;
+		std::vector<Util::Point> __path2;
 
         std::queue<SteerLib::AgentGoalInfo> _goalQueue;
 
@@ -132,6 +134,7 @@ class SocialForcesAgent : public SteerLib::AgentInterface
         Util::Point _currentLocalTarget;
 
         friend class SocialForcesAIModule;
+		int looop = 0;
 
     #ifdef DRAW_HISTORIES
         std::deque<Util::Point> __oldPositions;

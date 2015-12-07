@@ -283,7 +283,7 @@ Vector SocialForcesAgent::calcGoalForce(Vector _goalDirection, float _dt)
 {
     //std::cerr<<"<<<calcGoalForce>>> Please Implement my body\n";
 	Util::Vector goal_force = Util::Vector(0, 0, 0);
-	goal_force = (((_goalDirection * PREFERED_SPEED) - velocity())  * AGENT_MASS);
+	goal_force = ((_goalDirection * PREFERED_SPEED) - velocity()) / _dt  * AGENT_MASS;
 	return goal_force;
 }
 
@@ -676,7 +676,11 @@ void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNu
 		_forward = normalize(_velocity);
 	}
 	// _position = _position + (_velocity * dt);
-
+	looop++;
+	if (looop % 200 == 0)
+	{
+		this->computePlan2();
+	}
 }
 
 
@@ -782,6 +786,24 @@ void SocialForcesAgent::computePlan()
 		//SteerLib::AgentGoalInfo goal_path_pt;
 		//goal_path_pt.targetLocation = global_goal;
 		//_goalQueue.push(goal_path_pt);
+	}
+}
+
+void SocialForcesAgent::computePlan2()
+{
+	__path2.clear();
+	if (astar.computePath(__path2, _position, _goalQueue.back().targetLocation, gSpatialDatabase))
+	{
+
+		while (!_goalQueue.empty())
+			_goalQueue.pop();
+
+		for (int i = 0; i<__path2.size(); ++i)
+		{
+			SteerLib::AgentGoalInfo goal_path_pt;
+			goal_path_pt.targetLocation = __path2[i];
+			_goalQueue.push(goal_path_pt);
+		}
 	}
 }
 

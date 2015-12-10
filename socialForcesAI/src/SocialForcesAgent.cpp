@@ -769,7 +769,7 @@ bool SocialForcesAgent::runLongTermPlanning()
 
 void SocialForcesAgent::computePlan()
 {
-	//std::cout << "\nComputing agent plan ";
+	//std::cout << "\nComputing agent plan " << std::endl;
 	//Util::Point global_goal = _goalQueue.front().targetLocation;
 	if (astar.computePath(__path, _position, _goalQueue.front().targetLocation, gSpatialDatabase))
 	{
@@ -791,7 +791,6 @@ void SocialForcesAgent::computePlan()
 
 void SocialForcesAgent::computePlan2()
 {
-	__path2.clear();
 	if (astar.computePath(__path2, _position, _goalQueue.back().targetLocation, gSpatialDatabase))
 	{
 

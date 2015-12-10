@@ -102,6 +102,9 @@ namespace SteerLib
 			double calcH_by_Euclidian(unsigned int x_n, unsigned int z_n, unsigned int x_g, unsigned int z_g);
 			double calcH_by_Manhattan(unsigned int x_n, unsigned int z_n, unsigned int x_g, unsigned int z_g);
 			static bool comp(AStarPlannerNode i, AStarPlannerNode j);
+			bool update(Util::Point start, Util::Point goal, SteerLib::GridDatabase2D * _gSpatialDatabase, float weight, float weight2, std::vector<AStarPlannerNode>& open, std::vector<AStarPlannerNode>& closed, std::vector<AStarPlannerNode>& incon, std::vector<std::vector<AStarPlannerNode>>& gridcell, bool flag);
+			void update_list1(std::vector<AStarPlannerNode>& open, std::vector<AStarPlannerNode>& closed, std::vector<AStarPlannerNode>& incon, AStarPlannerNode AStarPlannerNode);
+			void update_list2(std::vector<AStarPlannerNode>& open, std::vector<AStarPlannerNode>& closed, std::vector<AStarPlannerNode>& incon, AStarPlannerNode AStarPlannerNode);
 
 		private:
 			SteerLib::GridDatabase2D * gSpatialDatabase;

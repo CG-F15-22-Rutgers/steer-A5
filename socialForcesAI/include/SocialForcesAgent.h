@@ -41,7 +41,7 @@ class SocialForcesAgent : public SteerLib::AgentInterface
         SocialForcesAgent();
         ~SocialForcesAgent();
         void reset(const SteerLib::AgentInitialConditions & initialConditions, SteerLib::EngineInterface * engineInfo);
-        void updateAI(float timeStamp, float dt, unsigned int frameNumber);
+		void updateAI(float timeStamp, float dt, unsigned int frameNumber);//, const SteerLib::AgentInitialConditions & initialConditions);
         void disable();
         void draw();
 
@@ -71,6 +71,7 @@ class SocialForcesAgent : public SteerLib::AgentInterface
 		SteerLib::AStarPlanner astar;
 		void computePlan();
 		void computePlan2();
+		void special(const SteerLib::AgentInitialConditions & initialConditions);
 
     protected:
         /// Updates position, velocity, and orientation of the agent, given the force and dt time step.
@@ -96,6 +97,7 @@ class SocialForcesAgent : public SteerLib::AgentInterface
 		std::vector<Util::Point> __path2;
 
         std::queue<SteerLib::AgentGoalInfo> _goalQueue;
+		//std::queue<SteerLib::AgentGoalInfo> _goalQueue2;
 
         // Stuff specific to RVO
         // should be normalized

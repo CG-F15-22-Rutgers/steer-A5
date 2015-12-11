@@ -238,7 +238,7 @@ void SocialForcesAIModule::preprocessSimulation()
 	//	return;
 	//else
 	//	planned_once = false;
-	//std::cout << "\nPreprocess simulation\n"<< std::endl;
+	std::cout << "\nPreprocess simulation\n"<< std::endl;
 	std::vector<SteerLib::AgentInterface*> _agents = gEngine->getAgents();
 	for (int i = 0; i<_agents.size(); ++i)
 	{

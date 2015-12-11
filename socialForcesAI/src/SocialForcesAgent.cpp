@@ -83,6 +83,8 @@ void SocialForcesAgent::disable()
 
 void SocialForcesAgent::reset(const SteerLib::AgentInitialConditions & initialConditions, SteerLib::EngineInterface * engineInfo)
 {
+	//std::cout << "\nreset\n" << std::endl;
+	std::string testcase = (*engineInfo->getModuleOptions("testCasePlayer").find("testcase")).second;
 	// compute the "old" bounding box of the agent before it is reset.  its OK that it will be invalid if the agent was previously disabled
 	// because the value is not used in that case.
 	// std::cout << "resetting agent " << this << std::endl;
@@ -158,6 +160,11 @@ void SocialForcesAgent::reset(const SteerLib::AgentInitialConditions & initialCo
 		else {
 			throw Util::GenericException("Unsupported goal type; SocialForcesAgent only supports GOAL_TYPE_SEEK_STATIC_TARGET and GOAL_TYPE_AXIS_ALIGNED_BOX_GOAL.");
 		}
+	}
+
+	if (testcase == "crowd_crossing")
+	{
+		special(initialConditions);
 	}
 
 	runLongTermPlanning();
@@ -553,7 +560,7 @@ bool SocialForcesAgent::hasLineOfSightTo(Util::Point target)
 }
 
 
-void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNumber)
+void SocialForcesAgent::updateAI(float timeStamp, float dt, unsigned int frameNumber)//, const SteerLib::AgentInitialConditions & initialConditions)
 {
 	// std::cout << "_SocialForcesParams.rvo_max_speed " << _SocialForcesParams._SocialForcesParams.rvo_max_speed << std::endl;
 	Util::AutomaticFunctionProfiler profileThisFunction( &SocialForcesGlobals::gPhaseProfilers->aiProfiler );
@@ -773,15 +780,26 @@ void SocialForcesAgent::computePlan()
 	//Util::Point global_goal = _goalQueue.front().targetLocation;
 	if (astar.computePath(__path, _position, _goalQueue.front().targetLocation, gSpatialDatabase))
 	{
-
+		SteerLib::AgentGoalInfo temp_goal;
+		std::queue<SteerLib::AgentGoalInfo> temp_queue;
+		_goalQueue.pop();
 		while (!_goalQueue.empty())
+		{
+			temp_goal = _goalQueue.front();
+			temp_queue.push(temp_goal);
 			_goalQueue.pop();
-
+		}
 		for (int i = 0; i<__path.size(); ++i)
 		{
 			SteerLib::AgentGoalInfo goal_path_pt;
 			goal_path_pt.targetLocation = __path[i];
 			_goalQueue.push(goal_path_pt);
+		}
+		while (!temp_queue.empty())
+		{
+			temp_goal = temp_queue.front();
+			_goalQueue.push(temp_goal);
+			temp_queue.pop();
 		}
 		//SteerLib::AgentGoalInfo goal_path_pt;
 		//goal_path_pt.targetLocation = global_goal;
@@ -806,6 +824,37 @@ void SocialForcesAgent::computePlan2()
 	}
 }
 
+void SocialForcesAgent::special(const SteerLib::AgentInitialConditions & initialConditions) {
+	// big agent trying to cross a one way street
+
+	// idea
+	// have the other agents go around the big agent
+	// see how long it takes for the big guy to cross 
+	// then change the goals for the remaining agents or just run planner
+
+	SteerLib::AgentGoalInfo originalgoal = _goalQueue.front();
+	_goalQueue.pop();
+	SteerLib::AgentGoalInfo goal;
+
+	if (initialConditions.name == "A") {
+		goal.targetLocation = Point(position().x, 0, -75);
+		_goalQueue.push(goal);
+		goal.targetLocation = Point(position().x, 0, -20);
+		_goalQueue.push(goal);
+		_goalQueue.push(originalgoal);
+
+		runLongTermPlanning();
+	}
+
+	else
+	{		
+		goal.targetLocation = originalgoal.targetLocation;
+		goal.targetLocation.z -= 5;
+		_goalQueue.push(goal);
+		runLongTermPlanning();
+	}
+
+}
 bool SocialForcesAgent::runLongTermPlanning2()
 {
 

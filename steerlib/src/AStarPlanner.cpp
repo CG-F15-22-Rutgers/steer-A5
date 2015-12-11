@@ -125,250 +125,7 @@ namespace SteerLib
 
 		float err = 0.000001f;
 		bool flag = true;
-		std::cout << "before 1st update" << std::endl;
 		update(start, goal, gSpatialDatabase, weight, weight2, open, closed, incon, gridcell, flag);
-		std::cout << "after 1st update" << std::endl;
-
-		//double smallest_F = gridcell[x_s][z_s].f;
-
-
-		//int iit = 0;
-		//int loop = 0;
-		//unsigned int index_neighbour, index_n, x_n, z_n;
-		//int x_range_min, x_range_max, z_range_min, z_range_max;
-		//Util::Point current_position;
-		//std::vector<AStarPlannerNode>::iterator min;
-		//float err = 0.01f;
-		//while (gridcell[x_g][z_g].g - smallest_F > -err)
-		//{
-		//	if (!(std::find(closed.begin(), closed.end(), open[iit]) != closed.end()))
-		//	{
-		//		closed.push_back(open[iit]);
-		//	}
-
-		//	//std::cout << " loop" << loop << std::endl;
-		//	////std::cout << " close_size" << closed.size() << std::endl;
-		//	//std::cout << " open_size" << open.size() << std::endl;
-		//	//std::cout << " smallest_F" << smallest_F << std::endl;
-		//	////std::cout << " f(goal)" << gridcell[x_g][z_g].g << std::endl;
-		//	//std::cout << " iit" << iit << std::endl;
-		//	//std::cout << " iit" << open[iit].point.x << " " << open[iit].point.z << std::endl;
-
-		//	//update surrounding cells cost
-		//	index_n = gSpatialDatabase->getCellIndexFromLocation(open[iit].point);
-		//	gSpatialDatabase->getGridCoordinatesFromIndex(index_n, x_n, z_n);
-		//	x_range_min = MAX(x_n - OBSTACLE_CLEARANCE, 0);
-		//	x_range_max = MIN(x_n + OBSTACLE_CLEARANCE, X);
-		//	z_range_min = MAX(z_n - OBSTACLE_CLEARANCE, 0);
-		//	z_range_max = MIN(z_n + OBSTACLE_CLEARANCE, Z);
-
-		//	//down
-		//	if (x_range_max == x_n + 1)
-		//	{
-		//		index_neighbour = gSpatialDatabase->getCellIndexFromGridCoords(x_n + 1, z_n);
-		//		if (canBeTraversed(index_neighbour))
-		//		{
-		//			if (gridcell[x_n + 1][z_n].g - gridcell[x_n][z_n].g - cellsizeX > 0)
-		//			{
-		//				gridcell[x_n + 1][z_n].g = gridcell[x_n][z_n].g + cellsizeX;
-		//				current_position = getPointFromGridIndex(index_neighbour);
-		//				gridcell[x_n + 1][z_n].point = current_position;
-		//				gridcell[x_n + 1][z_n].h = calcH_by_Euclidian(x_n + 1, z_n, x_g, z_g);
-		//				gridcell[x_n + 1][z_n].parent = &gridcell[x_n][z_n];
-		//				gridcell[x_n + 1][z_n].f = gridcell[x_n + 1][z_n].g + weight*gridcell[x_n + 1][z_n].h;
-		//				//delete from the list if already presented
-		//				if (std::find(open.begin(), open.end(), gridcell[x_n + 1][z_n]) != open.end())
-		//				{
-		//					open.erase(std::remove(open.begin(), open.end(), gridcell[x_n + 1][z_n]), open.end());
-		//				}
-		//				open.push_back(gridcell[x_n + 1][z_n]);
-		//			}
-		//		}
-		//	}
-
-		//	//up
-		//	if (x_range_min == x_n - 1)
-		//	{
-		//		index_neighbour = gSpatialDatabase->getCellIndexFromGridCoords(x_n - 1, z_n);
-		//		if (canBeTraversed(index_neighbour))
-		//		{
-		//			if (gridcell[x_n - 1][z_n].g - gridcell[x_n][z_n].g - cellsizeX > 0)
-		//			{
-		//				gridcell[x_n - 1][z_n].g = gridcell[x_n][z_n].g + cellsizeX;
-		//				current_position = getPointFromGridIndex(index_neighbour);
-		//				gridcell[x_n - 1][z_n].point = current_position;
-		//				gridcell[x_n - 1][z_n].h = calcH_by_Euclidian(x_n - 1, z_n, x_g, z_g);
-		//				gridcell[x_n - 1][z_n].parent = &gridcell[x_n][z_n];
-		//				gridcell[x_n - 1][z_n].f = gridcell[x_n - 1][z_n].g + weight*gridcell[x_n - 1][z_n].h;
-		//				//delete from the list if already presented
-		//				if (std::find(open.begin(), open.end(), gridcell[x_n - 1][z_n]) != open.end())
-		//				{
-		//					open.erase(std::remove(open.begin(), open.end(), gridcell[x_n - 1][z_n]), open.end());
-		//				}
-		//				open.push_back(gridcell[x_n - 1][z_n]);
-		//			}
-		//		}
-		//	}
-
-		//	//right
-		//	if (z_range_max == z_n + 1)
-		//	{
-		//		index_neighbour = gSpatialDatabase->getCellIndexFromGridCoords(x_n, z_n + 1);
-		//		if (canBeTraversed(index_neighbour))
-		//		{
-		//			if (gridcell[x_n][z_n + 1].g - gridcell[x_n][z_n].g - cellsizeZ > 0)
-		//			{
-		//				gridcell[x_n][z_n + 1].g = gridcell[x_n][z_n].g + cellsizeZ;
-		//				current_position = getPointFromGridIndex(index_neighbour);
-		//				gridcell[x_n][z_n + 1].point = current_position;
-		//				gridcell[x_n][z_n + 1].h = calcH_by_Euclidian(x_n, z_n + 1, x_g, z_g);
-		//				gridcell[x_n][z_n + 1].parent = &gridcell[x_n][z_n];
-		//				gridcell[x_n][z_n + 1].f = gridcell[x_n][z_n + 1].g + weight*gridcell[x_n][z_n + 1].h;
-		//				//delete from the list if already presented
-		//				if (std::find(open.begin(), open.end(), gridcell[x_n][z_n + 1]) != open.end())
-		//				{
-		//					open.erase(std::remove(open.begin(), open.end(), gridcell[x_n][z_n + 1]), open.end());
-		//				}
-		//				open.push_back(gridcell[x_n][z_n + 1]);
-		//			}
-		//		}
-		//	}
-
-		//	//left
-		//	if (z_range_min == z_n - 1)
-		//	{
-		//		index_neighbour = gSpatialDatabase->getCellIndexFromGridCoords(x_n, z_n - 1);
-		//		if (canBeTraversed(index_neighbour))
-		//		{
-		//			if (gridcell[x_n][z_n - 1].g - gridcell[x_n][z_n].g - cellsizeZ > 0)
-		//			{
-		//				gridcell[x_n][z_n - 1].g = gridcell[x_n][z_n].g + cellsizeZ;
-		//				current_position = getPointFromGridIndex(index_neighbour);
-		//				gridcell[x_n][z_n - 1].point = current_position;
-		//				gridcell[x_n][z_n - 1].h = calcH_by_Euclidian(x_n, z_n - 1, x_g, z_g);
-		//				gridcell[x_n][z_n - 1].parent = &gridcell[x_n][z_n];
-		//				gridcell[x_n][z_n - 1].f = gridcell[x_n][z_n - 1].g + weight*gridcell[x_n][z_n - 1].h;
-		//				//delete from the list if already presented
-		//				if (std::find(open.begin(), open.end(), gridcell[x_n][z_n - 1]) != open.end())
-		//				{
-		//					open.erase(std::remove(open.begin(), open.end(), gridcell[x_n][z_n - 1]), open.end());
-		//				}
-		//				open.push_back(gridcell[x_n][z_n - 1]);
-		//			}
-		//		}
-		//	}
-
-		//	//down-left
-		//	if (x_range_max == x_n + 1 && z_range_min == z_n - 1)
-		//	{
-		//		index_neighbour = gSpatialDatabase->getCellIndexFromGridCoords(x_n + 1, z_n - 1);
-		//		if (canBeTraversed(index_neighbour))
-		//		{
-		//			if (gridcell[x_n + 1][z_n - 1].g - gridcell[x_n][z_n].g - weight2*std::sqrt(cellsizeX*cellsizeX + cellsizeZ*cellsizeZ) > 0)
-		//			{
-		//				gridcell[x_n + 1][z_n - 1].g = gridcell[x_n][z_n].g + weight2*std::sqrt(cellsizeX*cellsizeX + cellsizeZ*cellsizeZ);
-		//				current_position = getPointFromGridIndex(index_neighbour);
-		//				gridcell[x_n + 1][z_n - 1].point = current_position;
-		//				gridcell[x_n + 1][z_n - 1].h = calcH_by_Euclidian(x_n + 1, z_n - 1, x_g, z_g);
-		//				gridcell[x_n + 1][z_n - 1].parent = &gridcell[x_n][z_n];
-		//				gridcell[x_n + 1][z_n - 1].f = gridcell[x_n + 1][z_n - 1].g + weight*gridcell[x_n + 1][z_n - 1].h;
-		//				//delete from the list if already presented
-		//				if (std::find(open.begin(), open.end(), gridcell[x_n + 1][z_n - 1]) != open.end())
-		//				{
-		//					open.erase(std::remove(open.begin(), open.end(), gridcell[x_n + 1][z_n - 1]), open.end());
-		//				}
-		//				open.push_back(gridcell[x_n + 1][z_n - 1]);
-		//			}
-		//		}
-		//	}
-
-		//	//up-left
-		//	if (x_range_min == x_n - 1 && z_range_min == z_n - 1)
-		//	{
-		//		index_neighbour = gSpatialDatabase->getCellIndexFromGridCoords(x_n - 1, z_n - 1);
-		//		if (canBeTraversed(index_neighbour))
-		//		{
-		//			if (gridcell[x_n - 1][z_n - 1].g - gridcell[x_n][z_n].g - weight2*std::sqrt(cellsizeX*cellsizeX + cellsizeZ*cellsizeZ) > 0)
-		//			{
-		//				gridcell[x_n - 1][z_n - 1].g = gridcell[x_n][z_n].g + weight2*std::sqrt(cellsizeX*cellsizeX + cellsizeZ*cellsizeZ);
-		//				current_position = getPointFromGridIndex(index_neighbour);
-		//				gridcell[x_n - 1][z_n - 1].point = current_position;
-		//				gridcell[x_n - 1][z_n - 1].h = calcH_by_Euclidian(x_n - 1, z_n - 1, x_g, z_g);
-		//				gridcell[x_n - 1][z_n - 1].parent = &gridcell[x_n][z_n];
-		//				gridcell[x_n - 1][z_n - 1].f = gridcell[x_n - 1][z_n - 1].g + weight*gridcell[x_n - 1][z_n - 1].h;
-		//				//delete from the list if already presented
-		//				if (std::find(open.begin(), open.end(), gridcell[x_n - 1][z_n - 1]) != open.end())
-		//				{
-		//					open.erase(std::remove(open.begin(), open.end(), gridcell[x_n - 1][z_n - 1]), open.end());
-		//				}
-		//				open.push_back(gridcell[x_n - 1][z_n - 1]);
-		//			}
-		//		}
-		//	}
-
-		//	//up-right
-		//	if (x_range_min == x_n - 1 && z_range_max == z_n + 1)
-		//	{
-		//		index_neighbour = gSpatialDatabase->getCellIndexFromGridCoords(x_n - 1, z_n + 1);
-		//		if (canBeTraversed(index_neighbour))
-		//		{
-		//			if (gridcell[x_n - 1][z_n + 1].g - gridcell[x_n][z_n].g - weight2*std::sqrt(cellsizeX*cellsizeX + cellsizeZ*cellsizeZ) > 0)
-		//			{
-		//				gridcell[x_n - 1][z_n + 1].g = gridcell[x_n][z_n].g + weight2*std::sqrt(cellsizeX*cellsizeX + cellsizeZ*cellsizeZ);
-		//				current_position = getPointFromGridIndex(index_neighbour);
-		//				gridcell[x_n - 1][z_n + 1].point = current_position;
-		//				gridcell[x_n - 1][z_n + 1].h = calcH_by_Euclidian(x_n - 1, z_n + 1, x_g, z_g);
-		//				gridcell[x_n - 1][z_n + 1].parent = &gridcell[x_n][z_n];
-		//				gridcell[x_n - 1][z_n + 1].f = gridcell[x_n - 1][z_n + 1].g + weight*gridcell[x_n - 1][z_n + 1].h;
-		//				//delete from the list if already presented
-		//				if (std::find(open.begin(), open.end(), gridcell[x_n - 1][z_n + 1]) != open.end())
-		//				{
-		//					open.erase(std::remove(open.begin(), open.end(), gridcell[x_n - 1][z_n + 1]), open.end());
-		//				}
-		//				open.push_back(gridcell[x_n - 1][z_n + 1]);
-		//			}
-		//		}
-		//	}
-
-		//	//down-right
-		//	if (x_range_max == x_n + 1 && z_range_max == z_n + 1)
-		//	{
-		//		index_neighbour = gSpatialDatabase->getCellIndexFromGridCoords(x_n + 1, z_n + 1);
-		//		if (canBeTraversed(index_neighbour))
-		//		{
-		//			if (gridcell[x_n + 1][z_n + 1].g - gridcell[x_n][z_n].g - weight2*std::sqrt(cellsizeX*cellsizeX + cellsizeZ*cellsizeZ) > 0)
-		//			{
-		//				gridcell[x_n + 1][z_n + 1].g = gridcell[x_n][z_n].g + weight2*std::sqrt(cellsizeX*cellsizeX + cellsizeZ*cellsizeZ);
-		//				current_position = getPointFromGridIndex(index_neighbour);
-		//				gridcell[x_n + 1][z_n + 1].point = current_position;
-		//				gridcell[x_n + 1][z_n + 1].h = calcH_by_Euclidian(x_n + 1, z_n + 1, x_g, z_g);
-		//				gridcell[x_n + 1][z_n + 1].parent = &gridcell[x_n][z_n];
-		//				gridcell[x_n + 1][z_n + 1].f = gridcell[x_n + 1][z_n + 1].g + weight*gridcell[x_n + 1][z_n + 1].h;
-		//				//delete from the list if already presented
-		//				if (std::find(open.begin(), open.end(), gridcell[x_n + 1][z_n + 1]) != open.end())
-		//				{
-		//					open.erase(std::remove(open.begin(), open.end(), gridcell[x_n + 1][z_n + 1]), open.end());
-		//				}
-		//				open.push_back(gridcell[x_n + 1][z_n + 1]);
-		//			}
-		//		}
-		//	}
-		//	open.erase(open.begin() + iit);
-		//	if (open.empty() == true)
-		//	{
-		//		std::cout << " cant reach the target" << std::endl;
-		//		return false;
-		//	}
-		//	std::vector<AStarPlannerNode>::iterator min;
-		//	min = std::min_element(open.begin(), open.end());
-
-		//	
-		//	iit = min - open.begin();
-		//	smallest_F = open[iit].f;
-		//	loop++;
-		//}
-
-
 
 		AStarPlannerNode node = gridcell[x_g][z_g];
 		std::vector<AStarPlannerNode> temp;
@@ -377,12 +134,9 @@ namespace SteerLib
 		while (!((std::abs(node.point.x - gridcell[x_s][z_s].point.x) < err) && (std::abs(node.point.z - gridcell[x_s][z_s].point.z) < err)))
 		{
 			node = (*(node.parent));
-			//std::cout << "node  " << node.point.x << " " << node.point.z << " " << std::endl;
 			temp.push_back((node));
-			//std::cout << "check1" << std::endl;
 		}
 
-		//std::cout << "before agent_path is modified" << std::endl;
 		//agent_path.push_back(start);
 		for (auto i = temp.end() - 1; i > temp.begin() - 1; i--)
 		{
@@ -393,7 +147,6 @@ namespace SteerLib
 		//std::cout << "total path length is   " << gridcell[x_g][z_g].g << std::endl;
 		//std::cout << "num of expanded nodes is  " << closed.size() << std::endl;
 
-		//std::cout<<"\nIn A*";
 		return true;
 	}
 
@@ -433,7 +186,8 @@ namespace SteerLib
 			{
 				closed.push_back(open[iit]);
 			}
-			std::cout << "size of open list   " << open.size()  << std::endl;
+			//std::cout << "size of open list   " << open.size()  << std::endl;
+
 			//update surrounding cells cost
 			index_n = gSpatialDatabase->getCellIndexFromLocation(open[iit].point);
 			gSpatialDatabase->getGridCoordinatesFromIndex(index_n, x_n, z_n);
